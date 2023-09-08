@@ -1,26 +1,18 @@
-import React from 'react';
-import Discover from './views/discover';
+import React, {Suspense} from 'react';
+import {Link, Outlet} from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <span>123123123</span>
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
-      <main>
-        <Discover name="297" age={18} />
-      </main>
-    </div>
+    <>
+      <Link to={'/discover'}>发现音乐</Link>
+      <Link to={'/mine'}>我的音乐</Link>
+      <Link to={'/focus'}>关注</Link>
+      <Link to={'/download'}>下载客户端</Link>
+
+      <Suspense fallback="...load">
+        <Outlet />
+      </Suspense>
+    </>
   );
 }
 
