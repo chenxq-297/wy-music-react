@@ -1,5 +1,7 @@
+import store, {useAppSelecor} from '@/store';
 import React, {memo} from 'react';
 import type {ReactNode} from 'react';
+// import {useSelector} from 'react-redux';
 import {Link, Outlet} from 'react-router-dom';
 
 interface IProps {
@@ -9,6 +11,9 @@ interface IProps {
 }
 
 const Discover: React.FC<IProps> = () => {
+  const {discover} = useAppSelecor((state) => ({
+    discover: state.discover.counter,
+  }));
   return (
     <>
       <Link to={'/discover/recommend'}>推荐</Link>
