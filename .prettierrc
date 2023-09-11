@@ -3,7 +3,7 @@
   "singleQuote": true,
   "bracketSameLine": true,
   "trailingComma": "es5",
-  "printWidth": 80,
+  "printWidth": 120,
   "overrides": [
     {
       "files": "*.css",
