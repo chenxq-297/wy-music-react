@@ -3,6 +3,7 @@ import type {ReactNode} from 'react';
 import {Link, NavLink} from 'react-router-dom';
 
 import {HeaderWrapper} from './style';
+import {Button} from 'antd';
 
 interface IProps {
   children?: ReactNode;
@@ -56,6 +57,7 @@ const WyHeader: React.FC<IProps> = () => {
         </div>
       </div>
       <div className="divider"></div>
+      <Button type="primary">Button</Button>
     </HeaderWrapper>
   );
 };
