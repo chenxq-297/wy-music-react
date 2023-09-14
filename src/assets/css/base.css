@@ -1,5 +1,6 @@
-
-
+button{
+  border: 0;
+}
 .sprite_01 {
   background: url(../img/sprite_01.png) no-repeat 0 9999px;
 }

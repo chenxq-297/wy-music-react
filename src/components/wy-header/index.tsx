@@ -3,7 +3,8 @@ import type {ReactNode} from 'react';
 import {Link, NavLink} from 'react-router-dom';
 
 import {HeaderWrapper} from './style';
-import {Button} from 'antd';
+import {Input} from 'antd';
+import {SearchOutlined} from '@ant-design/icons';
 
 interface IProps {
   children?: ReactNode;
@@ -51,13 +52,13 @@ const WyHeader: React.FC<IProps> = () => {
             </div>
           </div>
         </div>
-        <div className="right">
+        <div className="header-right">
+          <Input className="search" placeholder="音乐/视频/电台/用户" prefix={<SearchOutlined />} />
           <div className="center">创作者中心</div>
           <div className="">登录</div>
         </div>
       </div>
       <div className="divider"></div>
-      <Button type="primary">Button</Button>
     </HeaderWrapper>
   );
 };

@@ -13,10 +13,10 @@ const wyRequst = new Request({
   timeout: TIMEOUT,
   interceptors: {
     requsetInterceptor: (config) => {
-      const token = LocalCache.getCache('RB-cms-Token');
-      if (token && config.headers) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
+      // const token = LocalCache.getCache('RB-cms-Token');
+      // if (token && config.headers) {
+      //   config.headers.Authorization = `Bearer ${token}`;
+      // }
 
       return config;
     },
