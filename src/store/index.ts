@@ -1,6 +1,6 @@
-import {configureStore} from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 
-import {useSelector, TypedUseSelectorHook, useDispatch} from 'react-redux';
+import { useSelector, TypedUseSelectorHook, useDispatch } from 'react-redux';
 import recommendSlice from '@/views/discover/c-views/recommend/c-stroe';
 
 const store = configureStore({

@@ -6,21 +6,30 @@ export function getTopBanner() {
   });
 }
 
-export function getHotRecommend() {
+export function getHotRecommend(limit = 30) {
   return request.request({
     url: '/personalized',
-  });
-}
-
-export function getNewAlbum(limit, offset) {
-  return request.request({
-    url: '/album/new',
     params: {
       limit,
-      offset,
     },
   });
 }
+
+export function getNewAlbum() {
+  return request.request({
+    url: '/album/newest',
+  });
+}
+
+// export function getNewAlbum(limit, offset) {
+//   return request.request({
+//     url: '/album/new',
+//     params: {
+//       limit,
+//       offset,
+//     },
+//   });
+// }
 
 export function getTopList(id) {
   return request.request({

@@ -1,10 +1,10 @@
-import React, {memo, useRef, useState} from 'react';
-import type {ElementRef, ReactNode} from 'react';
+import React, { memo, useRef, useState } from 'react';
+import type { ElementRef, ReactNode } from 'react';
 
-import {Carousel} from 'antd';
+import { Carousel } from 'antd';
 
-import {BannerWrapper} from './style';
-import {useAppSelecor} from '@/store';
+import { BannerWrapper } from './style';
+import { useAppSelecor } from '@/store';
 
 interface IProps {
   children?: ReactNode;
@@ -13,14 +13,14 @@ interface IProps {
 const CarouselHeader: React.FC<IProps> = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const bannerRef = useRef<ElementRef<typeof Carousel>>(null);
-  const {banners} = useAppSelecor((state) => ({
+  const { banners } = useAppSelecor((state) => ({
     banners: state.recommend.banners,
   }));
   const onChange = (currentSlide: number) => {
     setCurrentIndex(currentSlide);
   };
   let bgImageUrl;
-  if (currentIndex >= 0 && banners.length > 0) {
+  if (currentIndex >= 0 && banners?.length > 0) {
     bgImageUrl = banners[currentIndex].imageUrl + '?imageView&blur=40x20';
   }
 

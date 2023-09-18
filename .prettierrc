@@ -1,9 +1,10 @@
 {
-  "bracketSpacing": false,
+  "bracketSpacing": true,
   "singleQuote": true,
   "bracketSameLine": true,
   "trailingComma": "es5",
   "printWidth": 120,
+
   "overrides": [
     {
       "files": "*.css",
