@@ -1,6 +1,5 @@
 import Request from './request';
-import {BASE_URL, TIMEOUT} from './request/config';
-import LocalCache from '@/utils/cache';
+import { BASE_URL, TIMEOUT } from './request/config';
 
 export interface IdataType<T = any> {
   code: number;

@@ -1,5 +1,5 @@
-import React, {Suspense} from 'react';
-import {Link, Outlet} from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { Outlet } from 'react-router-dom';
 import WyHeader from './components/wy-header';
 import WyFooter from './components/wy-footer';
 

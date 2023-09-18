@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-import type {AxiosInstance} from 'axios';
-import type {MyAxiosRequsetConfig, MyAxiosRequsetLiConfig} from './type';
+import type { AxiosInstance } from 'axios';
+import type { MyAxiosRequsetConfig, MyAxiosRequsetLiConfig } from './type';
 
 class Request {
   instance: AxiosInstance;
@@ -62,19 +62,19 @@ class Request {
   }
 
   get<T>(config: MyAxiosRequsetLiConfig<T>) {
-    return this.request({...config, method: 'GET'});
+    return this.request({ ...config, method: 'GET' });
   }
 
   post<T>(config: MyAxiosRequsetLiConfig<T>) {
-    return this.request({...config, method: 'POST'});
+    return this.request({ ...config, method: 'POST' });
   }
 
   delete<T>(config: MyAxiosRequsetLiConfig<T>) {
-    return this.request({...config, method: 'DELETE'});
+    return this.request({ ...config, method: 'DELETE' });
   }
 
   patch<T>(config: MyAxiosRequsetLiConfig<T>) {
-    return this.request({...config, method: 'PATCH'});
+    return this.request({ ...config, method: 'PATCH' });
   }
 }
 export default Request;

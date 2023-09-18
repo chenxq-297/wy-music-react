@@ -32,7 +32,7 @@ export function getNewAlbum() {
 // }
 
 export function getTopList(id) {
-  return request.request({
+  return request.get({
     url: '/playlist/detail',
     params: {
       id,

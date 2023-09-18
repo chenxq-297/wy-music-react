@@ -1,4 +1,4 @@
-import type {CreateAxiosDefaults, InternalAxiosRequestConfig, AxiosResponse, AxiosRequestConfig} from 'axios';
+import type { CreateAxiosDefaults, InternalAxiosRequestConfig, AxiosResponse, AxiosRequestConfig } from 'axios';
 
 export interface MyAxiosRequsetConfig extends CreateAxiosDefaults {
   interceptors?: {
