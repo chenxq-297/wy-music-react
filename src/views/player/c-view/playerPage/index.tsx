@@ -5,8 +5,8 @@ interface IProps {
   children?: ReactNode;
 }
 
-const Mine: React.FC<IProps> = () => {
-  return <>Mine</>;
+const playerPage: React.FC<IProps> = () => {
+  return <>playerPage</>;
 };
 
-export default memo(Mine);
+export default memo(playerPage);

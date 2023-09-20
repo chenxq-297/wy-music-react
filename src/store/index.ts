@@ -2,10 +2,12 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import { useSelector, TypedUseSelectorHook, useDispatch } from 'react-redux';
 import recommendSlice from '@/views/discover/c-views/recommend/c-stroe';
+import playerSlice from '@/views/player/c-store';
 
 const store = configureStore({
   reducer: {
     recommend: recommendSlice,
+    player: playerSlice,
   },
 });
 

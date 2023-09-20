@@ -1,5 +1,5 @@
-import React, {lazy} from 'react';
-import {Navigate, createBrowserRouter} from 'react-router-dom';
+import React, { lazy } from 'react';
+import { Navigate, createBrowserRouter } from 'react-router-dom';
 
 import App from '@/App';
 
@@ -8,6 +8,7 @@ const Mine = lazy(() => import('@/views/mine'));
 const Download = lazy(() => import('@/views/download'));
 const Discover = lazy(() => import('@/views/discover'));
 const Focus = lazy(() => import('@/views/focus'));
+const Player = lazy(() => import('@/views/player/c-view/playerPage'));
 
 // 二级路由
 import Album from '@/views/discover/c-views/album';
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: '/mine',
         element: <Mine />,
+      },
+      {
+        path: '/player',
+        element: <Player />,
       },
     ],
   },
