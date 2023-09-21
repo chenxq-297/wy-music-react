@@ -1,6 +1,6 @@
 # 网易云WEB端项目
 
-## 技术栈：react18+rtk
+## 技术栈：react18 + styled-components + ReactRouter16.x + RTK
 
 ### 接口源于：[链接](https://github.com/Binaryify/NeteaseCloudMusicApi) 页面参考:[链接](https://github.com/coderwhy/hy-react-web-music) 
 
