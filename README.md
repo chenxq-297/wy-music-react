@@ -2,7 +2,7 @@
 
 ## 技术栈：react18+rtk
 
-### 接口源于[https://github.com/Binaryify/NeteaseCloudMusicApi] 页面参考[https://github.com/coderwhy/hy-react-web-music] 
+### 接口源于：[链接](https://github.com/Binaryify/NeteaseCloudMusicApi) 页面参考:[链接](https://github.com/coderwhy/hy-react-web-music) 
 
 本项目主要用于学习，不做任何商业用途，如果有小伙伴此感兴趣，欢迎一同探讨学习~
 
