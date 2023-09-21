@@ -11,6 +11,7 @@ const store = configureStore({
   },
 });
 
+export type IState = ReturnType<typeof store.getState>;
 export const useAppSelecor: TypedUseSelectorHook<ReturnType<typeof store.getState>> = useSelector;
 // 描述：useDispatch 函数返回一个store.dispatch类型
 export const useAppdispatch: () => typeof store.dispatch = useDispatch;

@@ -3,6 +3,8 @@ import React, { memo } from 'react';
 import type { ReactNode } from 'react';
 
 import { RankingItemWrapper } from './style';
+import { useAppdispatch } from '@/store';
+import { playCurrentSongAction } from '@/views/player/c-store';
 
 interface IProps {
   children?: ReactNode;
@@ -11,9 +13,10 @@ interface IProps {
 
 const RankItem: React.FC<IProps> = (props) => {
   const { itemData } = props;
+  const dispatch = useAppdispatch();
 
   const handlePlayClick = (id: number) => {
-    console.log(id);
+    dispatch(playCurrentSongAction(id));
   };
 
   return (

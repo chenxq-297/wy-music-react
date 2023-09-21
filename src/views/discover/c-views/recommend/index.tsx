@@ -4,13 +4,7 @@ import type { ElementRef, ReactNode } from 'react';
 import { Carousel } from 'antd';
 
 import { useAppSelecor, useAppdispatch } from '@/store';
-import {
-  fetchArtistDateAction,
-  fetchBannerDateAction,
-  fetchHotRecommendsDateAction,
-  fetchNewAlbumDateAction,
-  fetchRankingDataAction,
-} from './c-stroe';
+import { fetchArtistDateAction, fetchBannerDateAction, fetchHotRecommendsDateAction, fetchNewAlbumDateAction, fetchRankingDataAction } from './c-stroe';
 import CarouselHeader from './c-cps/carouselHeader';
 import { Content } from './style';
 import AreaHeaderV1 from '@/components/area-header-v1';
@@ -62,11 +56,7 @@ const Recommend: React.FC<IProps> = () => {
         <div className="recommendLeft">
           {/* 热门推荐 */}
           <div className="hotCommend">
-            <AreaHeaderV1
-              title="热门推荐"
-              keywords={['华语', '流行', '摇滚', '民谣', '电子']}
-              moreLink="/discover/songs"
-            />
+            <AreaHeaderV1 title="热门推荐" keywords={['华语', '流行', '摇滚', '民谣', '电子']} moreLink="/discover/songs" />
             <div className="recommend-list">
               {hotRecommends?.map((item) => {
                 return <AreaMenuItem key={item.id} itemData={item} />;

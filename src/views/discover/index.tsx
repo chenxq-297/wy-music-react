@@ -1,8 +1,8 @@
-import store, {useAppSelecor} from '@/store';
-import React, {memo} from 'react';
-import type {ReactNode} from 'react';
+import store, { useAppSelecor } from '@/store';
+import React, { memo } from 'react';
+import type { ReactNode } from 'react';
 // import {useSelector} from 'react-redux';
-import {Outlet} from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import DcrHeader from './c-cps/dcr-header';
 
 interface IProps {

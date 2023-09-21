@@ -1,5 +1,7 @@
-import { ILyric } from '@/utils/parse-lyric';
-import { createSlice } from '@reduxjs/toolkit';
+import { IState } from '@/store';
+import { ILyric, parseLyric } from '@/utils/parse-lyric';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { getSongDetail, getSongLyric } from '../c-services';
 
 interface playerState {
   currentSong: any;
@@ -10,10 +12,77 @@ interface playerState {
   playMode: number;
 }
 
+// 选择播放
+export const playCurrentSongAction = createAsyncThunk<any, number, { state: IState }>('playCurrentSong', (id, { dispatch, getState }) => {
+  // 歌曲
+  const playSongList = getState().player.playSongList;
+  const findIndex = playSongList.findIndex((item) => item.id === id);
+  if (findIndex == -1) {
+    // 网络请求
+    getSongDetail(id).then((res: any) => {
+      // 1.获取song
+      if (!res.songs.length) return;
+      const currentSong = res.songs[0];
+
+      const currentIndex = playSongList.length + 1;
+      dispatch(changeCurrentSongAndIndexAction({ currentSong, currentIndex }));
+      dispatch(changePlaySongListAction(currentSong));
+    });
+  } else {
+    const currentSong = playSongList[findIndex];
+    const currentIndex = findIndex;
+    dispatch(changeCurrentSongAndIndexAction({ currentSong, currentIndex }));
+  }
+
+  // 歌词
+  getSongLyric(id).then((res: any) => {
+    const lyrics = parseLyric(res.lrc.lyric);
+    dispatch(changeLyricsAction(lyrics));
+  });
+});
+
+// 切歌
+export const changeMusicAction = createAsyncThunk<any, boolean, { state: IState }>('changemuisc', (isNext, { dispatch, getState }) => {
+  // 1.获取state中的数据
+  const player = getState().player;
+  const playMode = player.playMode;
+  const songIndex = player.playSongIndex;
+  const songList = player.playSongList;
+
+  // 2.根据不同的模式计算不同的下一首歌曲的索引
+  let newIndex = songIndex;
+  if (playMode === 1) {
+    // 随机播放
+    newIndex = Math.floor(Math.random() * songList.length);
+  } else {
+    // 单曲顺序和顺序播放
+    newIndex = isNext ? songIndex + 1 : songIndex - 1;
+    if (newIndex > songList.length - 1) newIndex = 0;
+    if (newIndex < 0) newIndex = songList.length - 1;
+  }
+
+  dispatch(playCurrentSongAction(songList[newIndex].id));
+  // 3.获取当前的歌曲
+  // const song = songList[newIndex]
+  // dispatch(changeCurrentSongAction(song))
+  // dispatch(changePlaySongIndexAction(newIndex))
+
+  // // 4.请求新的歌词
+  // getSongLyric(song.id).then((res) => {
+  //   // 1.获取歌词的字符串
+  //   const lyricString = res.lrc.lyric
+  //   // 2.对歌词进行解析(一个个对象)
+  //   const lyrics = parseLyric(lyricString)
+  //   // 3.将歌词放到state中
+  //   dispatch(changeLyricsAction(lyrics))
+  // })
+});
+
 const initialState: playerState = {
   currentSong: {
     id: 33894312,
   },
+  // 歌词以及对应的索引
   lyrics: [],
   lyricIndex: -1,
   playSongList: [
@@ -204,7 +273,27 @@ const initialState: playerState = {
 const playerSlice = createSlice({
   name: 'player',
   initialState,
-  reducers: {},
+  reducers: {
+    changeCurrentSongAndIndexAction(state, action: PayloadAction<{ currentSong: any; currentIndex: any }>) {
+      state.currentSong = action.payload.currentSong;
+      state.playSongIndex = action.payload.currentIndex;
+    },
+    changePlaySongListAction(state, { payload }) {
+      state.playSongList.push(payload);
+    },
+    changeLyricsAction(state, { payload }) {
+      state.lyrics = payload;
+    },
+    changeLyricIndexAction(state, { payload }) {
+      state.lyricIndex = payload;
+    },
+    // 切换模式
+    changePlayModeAction(state, { payload }) {
+      state.playMode = payload;
+    },
+  },
 });
+
+export const { changeCurrentSongAndIndexAction, changePlaySongListAction, changeLyricsAction, changeLyricIndexAction, changePlayModeAction } = playerSlice.actions;
 
 export default playerSlice.reducer;

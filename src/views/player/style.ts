@@ -22,7 +22,7 @@ export const PlayerBarWrapper = styled.div`
   }
 `;
 
-export const BarControl = styled.div<{ isplaying: boolean }>`
+export const BarControl = styled.div<{ $isPlaying: boolean }>`
   display: flex;
   align-items: center;
 
@@ -44,7 +44,7 @@ export const BarControl = styled.div<{ isplaying: boolean }>`
     width: 36px;
     height: 36px;
     margin: 0 8px;
-    background-position: 0 ${(props) => (props.isplaying ? '-165px' : '-204px')};
+    background-position: 0 ${(props) => (props.$isPlaying ? '-165px' : '-204px')};
   }
 
   .next {
@@ -121,7 +121,7 @@ export const BarPlayerInfo = styled.div`
   }
 `;
 
-export const BarOperator = styled.div<{ playMode: number }>`
+export const BarOperator = styled.div<{ $playMode: number }>`
   display: flex;
   align-items: center;
   position: relative;
@@ -162,7 +162,7 @@ export const BarOperator = styled.div<{ playMode: number }>`
 
     .loop {
       background-position: ${(props) => {
-        switch (props.playMode) {
+        switch (props.$playMode) {
           case 1:
             return '-66px -248px';
           case 2:

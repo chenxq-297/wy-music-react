@@ -3,8 +3,10 @@ import type { ReactNode } from 'react';
 import { BarControl, BarOperator, BarPlayerInfo, PlayerBarWrapper } from './style';
 import { Link } from 'react-router-dom';
 import { formatTime, getImageSize } from '@/utils/format';
-import { Slider } from 'antd';
-import { useAppSelecor } from '@/store';
+import { Slider, message } from 'antd';
+import { useAppSelecor, useAppdispatch } from '@/store';
+import { shallowEqual } from 'react-redux';
+import { changeLyricIndexAction, changeMusicAction, changePlayModeAction } from './c-store';
 
 interface IProps {
   children?: ReactNode;
@@ -18,35 +20,97 @@ const player: React.FC<IProps> = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  const { currentSong } = useAppSelecor((state) => ({
-    currentSong: state.player.currentSong,
-  }));
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [isSliding, setIsSliding] = useState(false);
 
-  // 播放器 开始结束
+  const { currentSong, lyrics, lyricIndex, playMode } = useAppSelecor(
+    (state) => ({
+      currentSong: state.player.currentSong,
+      lyrics: state.player.lyrics,
+      lyricIndex: state.player.lyricIndex,
+      playMode: state.player.playMode,
+    }),
+    shallowEqual
+  );
+
   const audioRef = useRef<HTMLAudioElement>(null);
+  const dispatch = useAppdispatch();
 
-  const handleTimeUpdate = (e: any) => {
-    console.log(e);
+  // 音乐播放的进度
+  const handleTimeUpdate = () => {
+    const currentTime = audioRef.current!.currentTime * 1000;
+
+    if (!isSliding) {
+      const progress = (currentTime / duration) * 100;
+      setProgress(progress);
+      setCurrentTime(currentTime);
+    }
+
+    // 歌词
+    let index = lyrics.length - 1;
+    for (let i = 0; i < lyrics.length; i++) {
+      const lyric = lyrics[i];
+      if (lyric.time > currentTime) {
+        index = i - 1;
+        break;
+      }
+    }
+    if (lyricIndex === index || index === -1) return;
+    dispatch(changeLyricIndexAction(index));
+
+    // 5.展示对应的歌词
+    message.open({
+      content: lyrics[index].text,
+      key: 'lyric',
+      duration: 0,
+    });
   };
   const handleTimeEnded = () => {
-    console.log('end');
+    if (playMode === 2) {
+      audioRef.current!.currentTime = 0;
+      audioRef.current?.play();
+    } else {
+      handleChangeMusic(true);
+    }
   };
 
+  // 1.控制播放器的播放/暂停
   function handlePlayBtnClick() {
-    // 1.控制播放器的播放/暂停 改变isPlaying的状态
     isPlaying ? audioRef.current?.pause() : audioRef.current?.play().catch(() => setIsPlaying(false));
     setIsPlaying(!isPlaying);
   }
-  const handleChangeMusic = (bool = true) => {
-    console.log(bool);
+  // 上一首下一首
+  const handleChangeMusic = (isNext = true) => {
+    dispatch(changeMusicAction(isNext));
   };
+  // 播放模式
   const handleChangePlayMode = () => {
-    console.log(123);
+    let newPlayMode = playMode + 1;
+    if (newPlayMode > 2) newPlayMode = 0;
+    dispatch(changePlayModeAction(newPlayMode));
   };
+  // 拖动进度条
+  function handleSliderChanging(value: number) {
+    setIsSliding(true);
+
+    setProgress(value);
+    setCurrentTime((value / 100) * duration);
+  }
+  // 点击进度条
+  function handleSliderChanged(value: number) {
+    audioRef.current!.currentTime = ((value / 100) * duration) / 1000;
+
+    setProgress(value);
+    setCurrentTime((value / 100) * duration);
+    setIsSliding(false);
+  }
 
   // 当歌曲发生改变
   useEffect(() => {
+    // 播放并且修改时长
     audioRef.current!.src = getSongPlayUrl(currentSong.id);
+    setDuration(currentSong.dt);
     audioRef.current
       ?.play()
       .then(() => {
@@ -61,7 +125,7 @@ const player: React.FC<IProps> = () => {
     <>
       <PlayerBarWrapper className="sprite_playbar">
         <main>
-          <BarControl isplaying={isPlaying}>
+          <BarControl $isPlaying={isPlaying}>
             <button className="btn sprite_playbar prev" onClick={() => handleChangeMusic(false)}></button>
             <button className="btn sprite_playbar play" onClick={() => handlePlayBtnClick()}></button>
             <button className="btn sprite_playbar next" onClick={() => handleChangeMusic()}></button>
@@ -77,22 +141,16 @@ const player: React.FC<IProps> = () => {
               </div>
               <div className="progress">
                 {/* Slider组件 */}
-                <Slider
-                  step={0.5}
-                  value={progress}
-                  tooltip={{ formatter: null }}
-                  // onChange={handleSliderChanging}
-                  // onAfterChange={handleSliderChanged}
-                />
+                <Slider step={0.5} value={progress} tooltip={{ formatter: null }} onChange={handleSliderChanging} onAfterChange={handleSliderChanged} />
                 <div className="time">
-                  <span className="current">{formatTime(1)}</span>
+                  <span className="current">{formatTime(currentTime)}</span>
                   <span className="divider">/</span>
-                  <span className="duration">{formatTime(1)}</span>
+                  <span className="duration">{formatTime(duration)}</span>
                 </div>
               </div>
             </div>
           </BarPlayerInfo>
-          <BarOperator playMode={3}>
+          <BarOperator $playMode={playMode}>
             <div className="left">
               <button className="btn pip"></button>
               <button className="btn sprite_playbar favor"></button>
@@ -100,7 +158,7 @@ const player: React.FC<IProps> = () => {
             </div>
             <div className="right sprite_playbar">
               <button className="btn sprite_playbar volume"></button>
-              <button className="btn sprite_playbar loop" onClick={() => handleChangePlayMode}></button>
+              <button className="btn sprite_playbar loop" onClick={() => handleChangePlayMode()}></button>
               <button className="btn sprite_playbar playlist"></button>
             </div>
           </BarOperator>
