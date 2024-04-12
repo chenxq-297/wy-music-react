@@ -1,7 +1,7 @@
-button{
+button {
   border: 0;
 }
-a{
+a {
   color: #333;
   text-decoration: none;
 }
@@ -48,7 +48,6 @@ a{
 .sprite_playlist {
   background: url(../img/playlist_sprite.png) no-repeat 0 9999px;
 }
-
 
 /* 重置模态框 */
 /* .ant-message .ant-message-notice-content {

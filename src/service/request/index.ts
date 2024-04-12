@@ -11,14 +11,8 @@ class Request {
 
     // 拦截器的顺序是添加的顺序执行
     // this.interceptors 实例的拦截
-    this.instance.interceptors.request.use(
-      config.interceptors?.requsetInterceptor,
-      config.interceptors?.requsetInterceptorCatch
-    );
-    this.instance.interceptors.response.use(
-      config.interceptors?.responseInterceptor,
-      config.interceptors?.requsetInterceptorCatch
-    );
+    this.instance.interceptors.request.use(config.interceptors?.requsetInterceptor, config.interceptors?.requsetInterceptorCatch);
+    this.instance.interceptors.response.use(config.interceptors?.responseInterceptor, config.interceptors?.requsetInterceptorCatch);
     // 全局
     this.instance.interceptors.request.use(
       (res) => {

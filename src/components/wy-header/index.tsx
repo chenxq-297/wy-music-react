@@ -1,10 +1,10 @@
-import React, {memo} from 'react';
-import type {ReactNode} from 'react';
-import {Link, NavLink} from 'react-router-dom';
+import React, { memo } from 'react';
+import type { ReactNode } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 
-import {HeaderWrapper} from './style';
-import {Input} from 'antd';
-import {SearchOutlined} from '@ant-design/icons';
+import { HeaderWrapper } from './style';
+import { Input } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
 
 interface IProps {
   children?: ReactNode;

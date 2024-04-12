@@ -1,8 +1,8 @@
-import React, {memo} from 'react';
-import type {ReactNode} from 'react';
-import {NavLink} from 'react-router-dom';
+import React, { memo } from 'react';
+import type { ReactNode } from 'react';
+import { NavLink } from 'react-router-dom';
 
-import {DcrHdeader} from './style';
+import { DcrHdeader } from './style';
 
 interface IProps {
   children?: ReactNode;

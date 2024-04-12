@@ -31,13 +31,7 @@ const CarouselHeader: React.FC<IProps> = () => {
       }}>
       <div className="banner wrap-v2">
         {/* 轮播 */}
-        <Carousel
-          className="carousel"
-          ref={bannerRef}
-          afterChange={onChange}
-          effect="fade"
-          autoplaySpeed={10000}
-          autoplay>
+        <Carousel className="carousel" ref={bannerRef} afterChange={onChange} effect="fade" autoplaySpeed={10000} autoplay>
           {banners?.map((item) => {
             return (
               <div className="banner-item" key={item.imageUrl}>
